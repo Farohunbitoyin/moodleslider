@@ -48,7 +48,7 @@ body{
 }
 
 .slide img.zoomed{
-    transform:scale(1.25);
+    transform:scale(1.2);
     cursor:zoom-out;
 }
 
@@ -68,6 +68,8 @@ body{
     padding:6px 15px 15px;
     flex-wrap:wrap;
     background:#ffffff;
+    position:relative;
+    z-index:50;
 }
 
 .bottom-btn,
@@ -83,6 +85,8 @@ body{
     min-width:120px;
     box-shadow:0 3px 8px rgba(0,0,0,0.15);
     transition:all 0.2s ease;
+    pointer-events:auto;
+    touch-action:manipulation;
 }
 
 .bottom-btn:hover,
@@ -99,6 +103,8 @@ body{
 .dots{
     text-align:center;
     padding:4px 8px 12px;
+    position:relative;
+    z-index:40;
 }
 
 .dot{
@@ -110,6 +116,7 @@ body{
     background:#c8c8c8;
     cursor:pointer;
     transition:all 0.2s ease;
+    touch-action:manipulation;
 }
 
 .dot.active{
@@ -124,6 +131,8 @@ body{
     padding:10px;
     border-top:1px solid #eeeeee;
     background:#fafafa;
+    position:relative;
+    z-index:40;
 }
 
 .thumbnail{
@@ -136,6 +145,7 @@ body{
     flex:0 0 auto;
     opacity:0.75;
     transition:all 0.2s ease;
+    touch-action:manipulation;
 }
 
 .thumbnail.active{
@@ -191,6 +201,6 @@ body{
     }
 
     .slide img.zoomed{
-        transform:scale(1.15);
+        transform:scale(1.12);
     }
 }
