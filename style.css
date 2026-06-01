@@ -54,54 +54,50 @@ body{
 .slide-counter{
     text-align:center;
     font-size:22px;
-    color:#4a3a25;
-    font-weight:500;
-    padding:12px 10px 6px;
+    color:#444;
+    font-weight:600;
+    padding:15px 10px;
 }
 
 .navigation-panel{
     display:flex;
     justify-content:center;
     align-items:center;
-    gap:18px;
-    padding:14px 18px 18px;
+    gap:20px;
+    padding:10px 20px 25px;
     flex-wrap:wrap;
     background:#ffffff;
 }
 
 .bottom-btn,
 .fullscreen-btn{
+    background:#1f7a4d;
     color:#ffffff;
     border:none;
-    padding:15px 28px;
-    border-radius:8px;
+    padding:16px 32px;
+    border-radius:10px;
     cursor:pointer;
     font-size:22px;
-    font-weight:bold;
-    min-width:145px;
-    box-shadow:0 4px 10px rgba(0,0,0,0.18);
+    font-weight:700;
+    min-width:180px;
+    box-shadow:0 4px 12px rgba(0,0,0,0.2);
+    transition:all 0.2s ease;
 }
 
-.bottom-btn{
-    background:#587482;
-}
-
-.bottom-btn:hover{
-    background:#465f6b;
-}
-
-.fullscreen-btn{
-    background:#263746;
-    min-width:210px;
-}
-
+.bottom-btn:hover,
 .fullscreen-btn:hover{
-    background:#1a2733;
+    background:#155f3a;
+    transform:translateY(-2px);
+}
+
+.bottom-btn:active,
+.fullscreen-btn:active{
+    transform:translateY(0);
 }
 
 .dots{
     text-align:center;
-    padding:6px 8px 10px;
+    padding:5px 8px 15px;
 }
 
 .dot{
@@ -112,10 +108,12 @@ body{
     border-radius:50%;
     background:#c8c8c8;
     cursor:pointer;
+    transition:all 0.2s ease;
 }
 
 .dot.active{
-    background:#6f42c1;
+    background:#1f7a4d;
+    transform:scale(1.15);
 }
 
 .thumbnails{
@@ -136,10 +134,11 @@ body{
     cursor:pointer;
     flex:0 0 auto;
     opacity:0.75;
+    transition:all 0.2s ease;
 }
 
 .thumbnail.active{
-    border-color:#6f42c1;
+    border-color:#1f7a4d;
     opacity:1;
 }
 
@@ -157,25 +156,27 @@ body{
 }
 
 .slider-wrapper:fullscreen .slide img{
-    max-height:82vh;
+    max-height:85vh;
 }
 
 @media(max-width:768px){
+
     .slide-counter{
         font-size:18px;
     }
 
     .navigation-panel{
+        flex-direction:column;
         gap:12px;
-        padding:12px;
     }
 
     .bottom-btn,
     .fullscreen-btn{
         width:90%;
         max-width:350px;
+        min-width:auto;
         font-size:20px;
-        padding:14px 18px;
+        padding:14px 20px;
     }
 
     .thumbnail{
