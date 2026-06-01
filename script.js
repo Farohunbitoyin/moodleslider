@@ -16,6 +16,8 @@ const dotsContainer = document.getElementById('dots');
 const thumbnailsContainer = document.getElementById('thumbnails');
 const slideCounter = document.getElementById('slideCounter');
 const fullscreenBtn = document.getElementById('fullscreenBtn');
+const nextBtn = document.getElementById('next');
+const prevBtn = document.getElementById('prev');
 
 let current = 0;
 
@@ -33,32 +35,39 @@ function updateUI(){
     if(thumbs[current]) thumbs[current].classList.add('active');
 
     slideCounter.textContent = `Image ${current + 1} of ${images.length}`;
-
-    const activeThumb = thumbs[current];
-
-    if(activeThumb){
-        activeThumb.scrollIntoView({
-            behavior:'smooth',
-            inline:'center',
-            block:'nearest'
-        });
-    }
 }
 
 function showSlide(index){
+    if(images.length === 0) return;
+
     current = (index + images.length) % images.length;
     updateUI();
 }
 
-function nextSlide(){
+function nextSlide(event){
+    if(event){
+        event.preventDefault();
+        event.stopPropagation();
+    }
+
     showSlide(current + 1);
 }
 
-function prevSlide(){
+function prevSlide(event){
+    if(event){
+        event.preventDefault();
+        event.stopPropagation();
+    }
+
     showSlide(current - 1);
 }
 
-function toggleFullscreen(){
+function toggleFullscreen(event){
+    if(event){
+        event.preventDefault();
+        event.stopPropagation();
+    }
+
     if(!document.fullscreenElement){
         sliderWrapper.requestFullscreen();
     }else{
@@ -87,8 +96,10 @@ function buildSlider(){
         img.alt = `Image ${index + 1}`;
         img.loading = 'lazy';
 
-        img.addEventListener('click', () => {
-            img.classList.toggle('zoomed');
+        img.addEventListener('click', function(event){
+            event.preventDefault();
+            event.stopPropagation();
+            this.classList.toggle('zoomed');
         });
 
         slide.appendChild(img);
@@ -96,55 +107,76 @@ function buildSlider(){
 
         const dot = document.createElement('span');
         dot.className = 'dot' + (index === 0 ? ' active' : '');
-        dot.addEventListener('click', () => showSlide(index));
+
+        dot.addEventListener('click', function(event){
+            event.preventDefault();
+            event.stopPropagation();
+            showSlide(index);
+        });
+
         dotsContainer.appendChild(dot);
 
         const thumb = document.createElement('img');
         thumb.className = 'thumbnail' + (index === 0 ? ' active' : '');
         thumb.src = src;
         thumb.alt = `Thumbnail ${index + 1}`;
-        thumb.addEventListener('click', () => showSlide(index));
+
+        thumb.addEventListener('click', function(event){
+            event.preventDefault();
+            event.stopPropagation();
+            showSlide(index);
+        });
+
         thumbnailsContainer.appendChild(thumb);
     });
 
     updateUI();
 }
 
-document.getElementById('next').addEventListener('click', nextSlide);
-document.getElementById('prev').addEventListener('click', prevSlide);
+nextBtn.addEventListener('click', nextSlide);
+prevBtn.addEventListener('click', prevSlide);
 fullscreenBtn.addEventListener('click', toggleFullscreen);
 
 document.addEventListener('keydown', (event) => {
     if(event.key === 'ArrowRight'){
-        nextSlide();
+        nextSlide(event);
     }
 
     if(event.key === 'ArrowLeft'){
-        prevSlide();
+        prevSlide(event);
     }
 
     if(event.key.toLowerCase() === 'f'){
-        toggleFullscreen();
+        toggleFullscreen(event);
     }
 });
 
 let touchStartX = 0;
-let touchEndX = 0;
+let touchStartY = 0;
+let touchStartTarget = null;
 
 sliderContainer.addEventListener('touchstart', (event) => {
+    touchStartTarget = event.target;
     touchStartX = event.changedTouches[0].screenX;
+    touchStartY = event.changedTouches[0].screenY;
 }, {passive:true});
 
 sliderContainer.addEventListener('touchend', (event) => {
-    touchEndX = event.changedTouches[0].screenX;
+    if(touchStartTarget && touchStartTarget.tagName === 'IMG'){
+        return;
+    }
 
-    const difference = touchStartX - touchEndX;
+    const touchEndX = event.changedTouches[0].screenX;
+    const touchEndY = event.changedTouches[0].screenY;
 
-    if(Math.abs(difference) > 50){
-        if(difference > 0){
-            nextSlide();
+    const diffX = touchStartX - touchEndX;
+    const diffY = touchStartY - touchEndY;
+
+    if(Math.abs(diffX) > 60 && Math.abs(diffX) > Math.abs(diffY)){
+        if(diffX > 0){
+            showSlide(current + 1);
         }else{
-            prevSlide();
+            showSlide(current - 1);
         }
     }
 }, {passive:true});
