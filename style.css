@@ -108,20 +108,20 @@ body{
 }
 
 .dot{
-    display:inline-block;
     width:13px;
     height:13px;
     margin:0 5px;
     border-radius:50%;
     background:#c8c8c8;
+    border:none;
     cursor:pointer;
-    transition:all 0.2s ease;
-    touch-action:manipulation;
+    padding:0;
 }
 
 .dot.active{
     background:#1f7a4d;
     transform:scale(1.15);
+}
 }
 
 .thumbnails{
