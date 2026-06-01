@@ -32,7 +32,7 @@ function updateUI(){
     if(dots[current]) dots[current].classList.add('active');
     if(thumbs[current]) thumbs[current].classList.add('active');
 
-    slideCounter.textContent = `Slide ${current + 1} of ${images.length}`;
+    slideCounter.textContent = `Image ${current + 1} of ${images.length}`;
 
     const activeThumb = thumbs[current];
 
@@ -74,7 +74,7 @@ function buildSlider(){
             </div>
         `;
 
-        slideCounter.textContent = 'Slide 0 of 0';
+        slideCounter.textContent = 'Image 0 of 0';
         return;
     }
 
@@ -84,7 +84,7 @@ function buildSlider(){
 
         const img = document.createElement('img');
         img.src = src;
-        img.alt = `Slide ${index + 1}`;
+        img.alt = `Image ${index + 1}`;
         img.loading = 'lazy';
 
         img.addEventListener('click', () => {
